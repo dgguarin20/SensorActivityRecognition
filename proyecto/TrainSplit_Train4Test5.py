@@ -149,6 +149,8 @@ print(confusion_m)
 print('')
 print(classification_report(y_test, y_score))
 print('accuracy: ',accuracy_score(y_test, y_score))
+print('')
+print('importances: ', clf.feature_importances_)
 
 def plot_confusion_matrix(y_true, y_pred, classes,
                           normalize=False,
@@ -236,6 +238,8 @@ print(confusion_m)
 print('')
 print(classification_report(y_test, y_score))
 print('accuracy: ',accuracy_score(y_test, y_score))
+print('')
+print('importances: ', clf.feature_importances_)
 np.set_printoptions(precision=2)
 activityn = np.array(activityn)
 y_score= y_score.astype(int)
