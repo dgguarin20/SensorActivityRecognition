@@ -34,8 +34,7 @@ label = []
 
 #
 df=pd.read_csv(path, header=2,index_col=0)
-sns.set(style="whitegrid")
-sns.lineplot(data=df)
+
 #
 #
 for i in range(len(activity)):
@@ -53,7 +52,7 @@ for i in range(len(activity)):
             if nombre[j] == 'X':
                 indices = list(df)
                 for d in range(1,5):
-                    print('hola')
+
                     d2 = d+1
                     df[indices[d2]] *= 9.80665
 
@@ -74,17 +73,13 @@ for i in range(len(activity)):
             arreglo.append(df)
             arreglo.append(activity[i])
             label.append(arreglo)
-            #plt.figure()
-            #plt.title(activity[i]+' '+nombre[j])
-            #sns.set(style="whitegrid")
-            #sns.lineplot(data=df)
+
 
 alldata = pd.read_csv('Jc_hold1.txt', header=2)
 alldata['label'] = 1
 for i in range(len(label)-1):
     d = label[i+1]
     data = d[0]
-    
 
     if(i==0 or i ==9 or i==30):
         valor = alldata['Time (s)'][alldata.index[-1]]
@@ -220,15 +215,34 @@ print(type(y_test))
 # Plot non-normalized confusion matrix
 plot_confusion_matrix(y_test, y_score, classes= activity, title='Confusion matrix, without normalization')
 
+y = all_data['label']
+X = all_data.drop(columns=['label','train'])
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 42)
 
-#
-#
-#                
-#
-#
-#
-###drible 3-9
-##pass 1 y 3 JC estan raros
-#
-#
-#
+clf = RandomForestClassifier(n_estimators = 15, min_samples_split =10, min_samples_leaf = 2, min_weight_fraction_leaf=0,  bootstrap=True)
+
+clf.fit(X_train, y_train)
+y_score = clf.predict(X_test)
+
+confusion_m = confusion_matrix(y_test,y_score)
+print('----------------------------------------------------')
+print('split')
+print('')
+print('last user as test')
+print('')
+print('confusion matrix')
+print(' ')
+print(confusion_m)
+print('')
+print(classification_report(y_test, y_score))
+print('accuracy: ',accuracy_score(y_test, y_score))
+np.set_printoptions(precision=2)
+activityn = np.array(activityn)
+y_score= y_score.astype(int)
+
+y_test = y_test.astype(int)
+activity = np.array(activity)
+
+print(type(y_test))
+# Plot non-normalized confusion matrix
+plot_confusion_matrix(y_test, y_score, classes= activity, title='Confusion matrix, without normalization')
